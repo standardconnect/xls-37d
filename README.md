@@ -59,12 +59,12 @@ At the time of writing, a ledger index is 8 digits ( 3.5 bytes, or 28 bits) hold
 
 Table 1-2. Ledger & Transaction Index Chaacteristics
 
-| Ledger Index |          |     |     | Transaction Index |         |
-| ------------ | -------- | --- | --- | ----------------- | ------- |
-| Type         | Integer  |     |     | Type              | Integer |
-| Digits       | 8        |     |     | Digits            | 2       |
-| Size (bits)  | 28       |     |     | Size (bits)       | 8       |
-| Sample       | 62084722 |     |     | Sample            | 32      |
+| Ledger Index |          |     | Transaction Index |         |
+| ------------ | -------- | --- | ----------------- | ------- |
+| Type         | Integer  |     | Type              | Integer |
+| Digits       | 8        |     | Digits            | 2       |
+| Size (bits)  | 28       |     | Size (bits)       | 8       |
+| Sample       | 62084722 |     | Sample            | 32      |
 
 # 2. Considerations
 
@@ -94,10 +94,10 @@ By implementing the improved concise transactions identifies (CTIM), it would sa
 
 #### Table 2-2. Comparision of Length
 
-| Type             | Characters | Size (bits) |     |
-| ---------------- | ---------- | ----------- | --- |
-| Transaction Hash | 64         | 256         |     |
-| CTIM             | 16         | 64          |     |
+| Type             | Characters | Size (bits) | Savings |
+| ---------------- | ---------- | ----------- | ------- |
+| Transaction Hash | 64         | 256         | -       |
+| CTIM             | 16         | 64          | 400%    |
 
 # 3. Specifications
 
