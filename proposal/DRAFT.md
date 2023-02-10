@@ -2,6 +2,7 @@
 Title:       Improved Concise Transaction Identifier (CTIM)
 Revision:    1 (2023-02-09)
 Author:      Richard Holland
+             Ryan Molley
 Affiliation: XRPL-Labs, XRPLF
 ```
 

@@ -27,7 +27,9 @@ export class Encode {
     if (this.type === 'advanced')
       this.T = BigInt(Number(opts.txn_index).toString(2).length <= 16 ? 0 : 1);
     if (this.type === 'advanced')
-      this.L = BigInt(Number(opts.ledger_index).toString(2).length <= 32 ? 0 : 1);
+      this.L = BigInt(
+        Number(opts.ledger_index).toString(2).length <= 32 ? 0 : 1
+      );
   }
 
   private bytelist = (opts: ICtiEncodeParams) => {
@@ -66,7 +68,9 @@ export class Encode {
     if (!Object.keys(this.def).includes(key)) return undefined;
 
     let offset = 0;
-    let sort = Object.keys(this.def).sort((a, b) => this.def[b].nth - this.def[a].nth);
+    let sort = Object.keys(this.def).sort(
+      (a, b) => this.def[b].nth - this.def[a].nth
+    );
 
     for (const _key of sort) {
       if (_key === key) break;
@@ -81,11 +85,15 @@ export class Encode {
       .map((key) => {
         if (key === 'ledger_index')
           return this.bits.push(
-            this.type === 'advanced' && this.L === 1n ? 64 : this.def.ledger_index.bits
+            this.type === 'advanced' && this.L === 1n
+              ? 64
+              : this.def.ledger_index.bits
           );
         if (key === 'txn_index')
           return this.bits.push(
-            this.type === 'advanced' && this.T === 1n ? 32 : this.def.txn_index.bits
+            this.type === 'advanced' && this.T === 1n
+              ? 32
+              : this.def.txn_index.bits
           );
         return this.bits.push(this.def[key].bits);
       });
@@ -99,15 +107,19 @@ export class Encode {
 
         if (key === 'control') {
           this.bigInt = (this.bigInt << BigInt(this.def[key].bits)) + this.T;
-          return (this.bigInt = (this.bigInt << BigInt(this.def[key].bits)) + this.L);
+          return (this.bigInt =
+            (this.bigInt << BigInt(this.def[key].bits)) + this.L);
         }
 
-        if (this.def[key].checksum) value = BigInt(parseInt(opts[key].slice(0, 1), 16));
+        if (this.def[key].checksum)
+          value = BigInt(parseInt(opts[key].slice(0, 1), 16));
         if (!this.def[key].checksum) value = BigInt(opts[key]);
 
         let bits = this.bits[index];
-        if (bits) return (this.bigInt = (this.bigInt << BigInt(bits)) + BigInt(value));
-        return (this.bigInt = (this.bigInt << BigInt(this.def[key].bits)) + BigInt(value));
+        if (bits)
+          return (this.bigInt = (this.bigInt << BigInt(bits)) + BigInt(value));
+        return (this.bigInt =
+          (this.bigInt << BigInt(this.def[key].bits)) + BigInt(value));
       });
 
     this.hex = '0x' + this.bigInt.toString(16).toUpperCase();
@@ -153,34 +165,46 @@ export class Decode {
 
   private getNetworkId = (): void => {
     let offset = 0;
-    let sort = Object.keys(this.def).sort((a, b) => this.def[b].nth - this.def[a].nth);
+    let sort = Object.keys(this.def).sort(
+      (a, b) => this.def[b].nth - this.def[a].nth
+    );
 
     for (const _key of sort) {
       if (_key === 'networkId') break;
       offset += this.def[_key].bits;
     }
-    this.networkId = Number((this.bigInt >> BigInt(offset)) & this.def.networkId.getValue);
+    this.networkId = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.networkId.getValue
+    );
   };
 
   private getLedger = (): void => {
     let offset = 0;
-    let sort = Object.keys(this.def).sort((a, b) => this.def[b].nth - this.def[a].nth);
+    let sort = Object.keys(this.def).sort(
+      (a, b) => this.def[b].nth - this.def[a].nth
+    );
 
     for (const _key of sort) {
       if (_key === 'ledger_index') break;
       offset += this.def[_key].bits;
     }
-    this.ledger_index = Number((this.bigInt >> BigInt(offset)) & this.def.ledger_index.getValue);
+    this.ledger_index = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.ledger_index.getValue
+    );
   };
 
   private getTx = (): void => {
     let offset = 0;
-    let sort = Object.keys(this.def).sort((a, b) => this.def[b].nth - this.def[a].nth);
+    let sort = Object.keys(this.def).sort(
+      (a, b) => this.def[b].nth - this.def[a].nth
+    );
 
     for (const _key of sort) {
       if (_key === 'txn_index') break;
       offset += this.def[_key].bits;
     }
-    this.txn_index = Number((this.bigInt >> BigInt(offset)) & this.def.txn_index.getValue);
+    this.txn_index = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.txn_index.getValue
+    );
   };
 }

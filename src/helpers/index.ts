@@ -1,2 +1,2 @@
-export { Encode } from "./encode";
-export { Decode } from "./decode";
+export { Encode } from './encode';
+export { Decode } from './decode';
