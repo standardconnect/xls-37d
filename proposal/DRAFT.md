@@ -8,15 +8,13 @@ Affiliation: XRPL-Labs, XRPLF
 
 > This proposal replaces [XLS-15d](https://github.com/XRPLF/XRPL-Standards/discussions/34)
 
-&nbsp;
-
 # Abstract
 
 This is a proposed standard to easily locate transactions that have been accepted on an XRP Ledger Protocol Chain, according to the ledger sequence they were accepted into rather than the hash of the transaction.
 
 # 1. Introduction
 
-#### 1.1 Hashing
+### 1.1 Hashing
 
 The XRP Ledger uniquely defines ledgers and transactions with a hexidecimal representation. These hexidecimal values are produced using a SHA-512Half hashing function, which transforms data into a SHA-512 hash and then takes the first half of the output.
 
@@ -26,23 +24,19 @@ Since these hashes are derived from the contents of the data, each hash and its 
 
 > Transaction Hash: 1C0FA22BBF5D0A8A7A105EB7D0AD7A2532863AA48584493D4BC45741AEDC4826
 
-#### 1.2. Indexing
+### 1.2. Indexing
 
 Ledgers and transactions can also be indentified by their sequenced position on the XRP Ledger.
-
-#### 1.2.1 Ledger Index
 
 As new ledgers are validated on the XRP Ledger, ususally every 3 to 5 seconds, they are assigned an integer based on their positon within in the overall ledger. This enables ledgers to be identified by a ledger index, also referred to as a sequence number. The only limitation is that the ledger needs to be closed before a sequence number can be assigned and used to identification.
 
 > Ledger Index: 62084722
 
-#### 1.2.2 Transaction Index
-
 During concensous, all nodes on the XRP Ledger will sort and agree upon the order of transactions within a given ledger. This unique sequence of transactions is also referred to as a canonical order. Given the process, every closed, or validated ledger will list transactions in a seqencial order that was agreed upon by the nodes of the network. This means that transactions, like ledgers, can also be identified by an index, so long as the ledger is closed and the ledger index is known.
 
 > Ledger Index: 25
 
-#### 1.3 Motivation
+### 1.3 Motivation
 
 As the ledger grows in size, optimizations techniques may be considered to limit the storage footprint of nodes and applications building on the XRP Ledger. If a transaction can be indentified by a hash or index, it is advantegous to consider the length each value.
 
@@ -57,9 +51,9 @@ Like mentioned earlier, the length of a transaction hash is 32 bytes, or 256 bit
 | Size (bits)      | 256                                                              |
 | Sample           | 1C0FA22BBF5D0A8A7A105EB7D0AD7A2532863AA48584493D4BC45741AEDC4826 |
 
-At the time of writing, a ledger index is 8 digits ( 3.5 bytes, or 28 bits) holding around 120 transactions (1 byte or 8 bits). This would equate to a 4.5 byte or 36 bit representation.
+At the time of writing, a ledger index is 8 digits (28 bits) holding around 120 transactions (8 bits). This would approximate to a 36 bit allocation.
 
-Table 1-2. Ledger & Transaction Index Chacteristics
+#### Table 1-2. Ledger & Transaction Index Chacteristics
 
 | Ledger Index |          |     | Transaction Index |         |
 | ------------ | -------- | --- | ----------------- | ------- |
@@ -72,7 +66,7 @@ Table 1-2. Ledger & Transaction Index Chacteristics
 
 In order for this standard to sustain for next 10 years, the size of the parameters need to be considered to ensure compatibility and extensibity.
 
-#### 2.1 Bit Allocations
+### 2.1 Bit Allocations
 
 For each input value, the max bit allocation is considered and the maximum upperbound limit is tabulated.
 
@@ -84,13 +78,13 @@ For each input value, the max bit allocation is considered and the maximum upper
 | Transaction Index | 16          | 32,767      |
 | Network ID        | 16          | 32,767      |
 
-#### 2.2 Extensible
+### 2.2 Extensible
 
 A leading `C` provides room for growth if necessary. If the Ledger Index exceeds 268,435,455, the leading `C` may be removed in order to reallocate the Ledger Index up to 32 bits.
 
 > This is a maximum total of 4,294,967,295 closed ledgers. Estimated ~400 yrs
 
-#### 2.3 Space Reduction and Savings
+### 2.3 Space Reduction and Savings
 
 By implementing the improved concise transactions identifies (CTIM), it would save occupy a quarter (1/4) of the spaced compared indexing using transaction hashes. See Table 2-2 for a comparisions of the sizes.
 
@@ -124,7 +118,7 @@ The identifier is divided into three fields.
 
 # 4. Implementation
 
-#### 4.1 Simple Implementation
+### 4.1 Simple Implementation
 
 #### 4.1.1 Encoding
 
@@ -155,7 +149,7 @@ const decodeCTIM = (ctim) => {
 };
 ```
 
-#### 4.2 Advanced Implementation
+### 4.2 Advanced Implementation
 
 An advanced implementation has been built with error handling and type safety.
 
