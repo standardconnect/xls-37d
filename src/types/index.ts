@@ -1,1 +1,3 @@
-export {ICtiEncodeParams} from './cti'
+import { ICtiEncodeParams } from './cti';
+
+export default ICtiEncodeParams;

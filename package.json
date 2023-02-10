@@ -1,7 +1,7 @@
 {
   "name": "xls-37d",
   "version": "0.0.1-beta",
-  "description": "XRPF Standards Proposal - Concise Transaction Identification",
+  "description": "XRPF Standards Proposal - Improved Concise Transaction Identifier (CTIM)",
   "main": "./dist/src/index.js",
   "repository": "https://github.com/standardconnect/xls-37d.git",
   "author": "interc0der",
@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
-    "c": "rm -rf ./dist && yarn format && yarn gen:docs && tsc && tsc-alias",
+    "c": "rm -rf ./dist && yarn gen:docs && tsc && tsc-alias",
     "gen:json": "yarn ts-node ./scripts/index.ts",
     "gen:types": "yarn ts-node ./scripts/genType.ts",
     "gen:docs": "npx typedoc --options typedoc.json",

@@ -117,6 +117,6 @@
       "helpers/*": ["src/helpers/*"]
     }
   },
-  "include": ["src/**/*.ts", "types/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "._*"]
 }

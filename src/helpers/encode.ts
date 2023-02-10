@@ -10,10 +10,9 @@ export class Encode {
   public L: bigint = 0n;
   private bits: number[] = [];
 
-  public cti: string | undefined;
+  public ctim: string | undefined;
   public hex: string | undefined;
   public bin: string | undefined;
-  public uri: string = '';
   public bigInt: bigint = 0n;
   public bytes: Buffer | undefined;
 
@@ -25,9 +24,11 @@ export class Encode {
     this.encode(opts);
 
     if (this.type === 'advanced')
-      this.T = BigInt(Number(opts.txn_index).toString(2).length <= 16 ? 0 : 1);
+      this.T = BigInt(Number(opts.txnIndex).toString(2).length <= 16 ? 0 : 1);
     if (this.type === 'advanced')
-      this.L = BigInt(Number(opts.ledger_index).toString(2).length <= 32 ? 0 : 1);
+      this.L = BigInt(
+        Number(opts.ledgerIndex).toString(2).length <= 32 ? 0 : 1
+      );
   }
 
   private bytelist = (opts: ICtiEncodeParams) => {
@@ -66,7 +67,9 @@ export class Encode {
     if (!Object.keys(this.def).includes(key)) return undefined;
 
     let offset = 0;
-    let sort = Object.keys(this.def).sort((a, b) => this.def[b].nth - this.def[a].nth);
+    let sort = Object.keys(this.def).sort(
+      (a, b) => this.def[b].nth - this.def[a].nth
+    );
 
     for (const _key of sort) {
       if (_key === key) break;
@@ -79,13 +82,17 @@ export class Encode {
     Object.keys(this.def)
       .sort((a, b) => this.def[a].nth - this.def[b].nth)
       .map((key) => {
-        if (key === 'ledger_index')
+        if (key === 'ledgerIndex')
           return this.bits.push(
-            this.type === 'advanced' && this.L === 1n ? 64 : this.def.ledger_index.bits
+            this.type === 'advanced' && this.L === 1n
+              ? 64
+              : this.def.ledgerIndex.bits
           );
-        if (key === 'txn_index')
+        if (key === 'txnIndex')
           return this.bits.push(
-            this.type === 'advanced' && this.T === 1n ? 32 : this.def.txn_index.bits
+            this.type === 'advanced' && this.T === 1n
+              ? 32
+              : this.def.txnIndex.bits
           );
         return this.bits.push(this.def[key].bits);
       });
@@ -99,21 +106,24 @@ export class Encode {
 
         if (key === 'control') {
           this.bigInt = (this.bigInt << BigInt(this.def[key].bits)) + this.T;
-          return (this.bigInt = (this.bigInt << BigInt(this.def[key].bits)) + this.L);
+          return (this.bigInt =
+            (this.bigInt << BigInt(this.def[key].bits)) + this.L);
         }
 
-        if (this.def[key].checksum) value = BigInt(parseInt(opts[key].slice(0, 1), 16));
+        if (this.def[key].checksum)
+          value = BigInt(parseInt(opts[key].slice(0, 1), 16));
         if (!this.def[key].checksum) value = BigInt(opts[key]);
 
         let bits = this.bits[index];
-        if (bits) return (this.bigInt = (this.bigInt << BigInt(bits)) + BigInt(value));
-        return (this.bigInt = (this.bigInt << BigInt(this.def[key].bits)) + BigInt(value));
+        if (bits)
+          return (this.bigInt = (this.bigInt << BigInt(bits)) + BigInt(value));
+        return (this.bigInt =
+          (this.bigInt << BigInt(this.def[key].bits)) + BigInt(value));
       });
 
     this.hex = '0x' + this.bigInt.toString(16).toUpperCase();
     this.bin = this.bigInt.toString(2);
-    this.cti = this.bigInt.toString();
-    this.uri = 'cti:' + this.cti;
+    this.ctim = this.bigInt.toString();
   };
 
   public convert = this.sink;
@@ -131,8 +141,8 @@ export class Decode {
   public bigInt: bigint = 0n;
   public bytes: Buffer | undefined;
   public networkId: number | undefined;
-  public ledger_index: number | undefined;
-  public txn_index: number | undefined;
+  public ledgerIndex: number | undefined;
+  public txnIndex: number | undefined;
 
   constructor(cti: string) {
     this.cti = cti;
@@ -153,34 +163,46 @@ export class Decode {
 
   private getNetworkId = (): void => {
     let offset = 0;
-    let sort = Object.keys(this.def).sort((a, b) => this.def[b].nth - this.def[a].nth);
+    let sort = Object.keys(this.def).sort(
+      (a, b) => this.def[b].nth - this.def[a].nth
+    );
 
     for (const _key of sort) {
       if (_key === 'networkId') break;
       offset += this.def[_key].bits;
     }
-    this.networkId = Number((this.bigInt >> BigInt(offset)) & this.def.networkId.getValue);
+    this.networkId = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.networkId.getValue
+    );
   };
 
   private getLedger = (): void => {
     let offset = 0;
-    let sort = Object.keys(this.def).sort((a, b) => this.def[b].nth - this.def[a].nth);
+    let sort = Object.keys(this.def).sort(
+      (a, b) => this.def[b].nth - this.def[a].nth
+    );
 
     for (const _key of sort) {
-      if (_key === 'ledger_index') break;
+      if (_key === 'ledgerIndex') break;
       offset += this.def[_key].bits;
     }
-    this.ledger_index = Number((this.bigInt >> BigInt(offset)) & this.def.ledger_index.getValue);
+    this.ledgerIndex = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.ledgerIndex.getValue
+    );
   };
 
   private getTx = (): void => {
     let offset = 0;
-    let sort = Object.keys(this.def).sort((a, b) => this.def[b].nth - this.def[a].nth);
+    let sort = Object.keys(this.def).sort(
+      (a, b) => this.def[b].nth - this.def[a].nth
+    );
 
     for (const _key of sort) {
-      if (_key === 'txn_index') break;
+      if (_key === 'txnIndex') break;
       offset += this.def[_key].bits;
     }
-    this.txn_index = Number((this.bigInt >> BigInt(offset)) & this.def.txn_index.getValue);
+    this.txnIndex = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.txnIndex.getValue
+    );
   };
 }

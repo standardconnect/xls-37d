@@ -1,25 +1,25 @@
 export const definitions = {
   simple: {
-    ledger_index: {
+    ledgerIndex: {
       nth: 4,
       bits: 32,
       getValue: 0xffffffffn,
       type: 'number',
     },
-    txn_index: {
+    txnIndex: {
       nth: 3,
       bits: 16,
       getValue: 0xffffn,
       type: 'number',
     },
-    ledger_hash: {
+    ledgerHash: {
       nth: 1,
       checksum: true,
       bits: 4,
       getValue: 0xffn,
       type: 'string',
     },
-    txn_hash: {
+    txnHash: {
       nth: 2,
       checksum: true,
       bits: 4,
@@ -32,12 +32,12 @@ export const definitions = {
       nth: 4,
       bits: 16,
     },
-    ledger_index: {
+    ledgerIndex: {
       nth: 5,
       bits: 32,
       varies: true,
     },
-    txn_index: {
+    txnIndex: {
       nth: 6,
       bits: 16,
       varies: true,
@@ -46,12 +46,12 @@ export const definitions = {
       nth: 1,
       bits: 1,
     },
-    ledger_hash: {
+    ledgerHash: {
       nth: 2,
       checksum: true,
       bits: 4,
     },
-    txn_hash: {
+    txnHash: {
       nth: 3,
       checksum: true,
       bits: 4,
@@ -64,17 +64,31 @@ export const definitions = {
       getValue: 0xffffn,
       type: 'number',
     },
-    ledger_index: {
+    ledgerIndex: {
       nth: 1,
       bits: 32,
       getValue: 0xffffffffn,
       type: 'number',
     },
-    txn_index: {
+    txnIndex: {
       nth: 2,
       bits: 32,
       getValue: 0xffffffffn,
       type: 'number',
+    },
+  },
+  improved: {
+    networkId: {
+      nth: 3,
+      bits: 16,
+    },
+    ledgerIndex: {
+      nth: 1,
+      bits: 32,
+    },
+    txnIndex: {
+      nth: 2,
+      bits: 16,
     },
   },
 };

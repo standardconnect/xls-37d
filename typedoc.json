@@ -1,11 +1,5 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "entryPointStrategy": "packages",
-  "entryPoints": [
-    "packages/xrpl-networks",
-    "packages/xrpl-tokens",
-    "packages/xrpl-collections"
-  ],
-  "readme": "./README.md",
+  "entryPoints": ["./src/index.ts"],
   "out": "docs"
 }
