@@ -12,13 +12,15 @@ Affiliation: XRPL-Labs, XRPLF
 
 This is a proposed standard to easily locate transactions that have been accepted on an XRP Ledger Protocol Chain, according to the ledger sequence they were accepted into rather than the hash of the transaction.
 
+This indentifier is only applicable for validated transactions. Unvalidated transactions, whether unsubmitted or locally rejected, would not have a consensus canonical order, and thus, this type of identifier would not apply.
+
 # 1. Introduction
 
 ### 1.1 Hashing
 
-The XRP Ledger uniquely defines ledgers and transactions with a hexidecimal representation. These hexidecimal values are produced using a SHA-512Half hashing function, which transforms data into a SHA-512 hash and then takes the first half of the output.
+The XRP Ledger uniquely defines ledgers and transactions with a hexidecimal representation. These hexidecimal values are produced using a namespace-biased 'SHA-512Half' hashing function, which transforms data into a SHA-512 hash and then takes the first half of the output.
 
-Since these hashes are derived from the contents of the data, each hash and its corresponding hexidecimal representation are unique. All hash values on the XRP Ledger are 64 charaters in length (32 bytes or 256 bits) and in hexidecimal format (0-9 / A-F and usually uppercase).
+Since these hashes are derived from the contents of the data, each hash is unique and are completely independent of ledger consensus. All hash values on the XRP Ledger are 64 charaters in length (32 bytes or 256 bits) and in hexidecimal format (0-9 / A-F and usually uppercase).
 
 > Ledger Hash: F8A87917637D476E871D22A1376D7C129DAC9E25D45AD4B67D1E75EA4418654C
 
@@ -28,17 +30,19 @@ Since these hashes are derived from the contents of the data, each hash and its 
 
 Ledgers and transactions can also be indentified by their sequenced position on the XRP Ledger.
 
-As new ledgers are validated on the XRP Ledger, ususally every 3 to 5 seconds, they are assigned an integer based on their positon within in the overall ledger. This enables ledgers to be identified by a ledger index, also referred to as a sequence number. The only limitation is that the ledger needs to be closed before a sequence number can be assigned and used to identification.
+As new ledgers are validated on the XRP Ledger, ususally every 3 to 5 seconds, they are assigned an integer based on their positon within in the overall ledger.
+This enables ledgers to be identified by a ledger index, also referred to as a sequence number [[3]](https://xrpl.org/basic-data-types.html#ledger-index) and thought to be more user-friendly over their hash-base counterpart. The only limitation is that the ledger needs to be closed before a sequence number can be assigned and used for identification.
 
 > Ledger Index: 62084722
 
-During concensous, all nodes on the XRP Ledger will sort and agree upon the order of transactions within a given ledger. This unique sequence of transactions is also referred to as a canonical order. Given the process, every closed, or validated ledger will list transactions in a seqencial order that was agreed upon by the nodes of the network. This means that transactions, like ledgers, can also be identified by an index, so long as the ledger is closed and the ledger index is known.
+During consensus, all nodes on the XRP Ledger will sort and agree upon the order of transactions within a given ledger. This unique sequence of transactions is also referred to as a canonical order. Given the process, every closed, or validated ledger will list transactions in a seqencial order that was agreed upon by the nodes of the network. This means that transactions, like ledgers, can also be identified by their offset index, so long as the ledger is closed and the ledger index is known. This offset is present in the transaction metadata as `TransactionIndex`.[[5]](https://xrpl.org/transaction-metadata.html)
 
 > Ledger Index: 25
 
 ### 1.3 Motivation
 
-As the ledger grows in size, optimizations techniques may be considered to limit the storage footprint of nodes and applications building on the XRP Ledger. If a transaction can be indentified by a hash or index, it is advantegous to consider the length each value.
+As the ledger grows in size, optimizations techniques may be considered to limit the storage footprint of nodes and applications building on the XRP Ledger.
+It may be useful in a range of applications to be able to uniquely identify a transaction by the point at which it was validated rather than by its explicit contents. If a transaction has been validated and can be indentified by a hash or index, it is advantegous to consider the length each value.
 
 Like mentioned earlier, the length of a transaction hash is 32 bytes, or 256 bits.
 
@@ -64,11 +68,10 @@ At the time of writing, a ledger index is 8 digits (28 bits) holding around 120 
 
 # 2. Considerations
 
-In order for this standard to sustain for next 10 years, the size of the parameters need to be considered to ensure compatibility and extensibity.
-
 ### 2.1 Bit Allocations
 
-For each input value, the max bit allocation is considered and the maximum upperbound limit is tabulated.
+To future-proof these identifiers for at least the next decade, the parameters and their size needs to be considered to ensure compatibility and extensibility.
+For each input value, the maximum bit allocation is considered and the upperbound limit is tabulated.
 
 #### Table 2-1. CTIM Allocation Limits
 
@@ -80,20 +83,20 @@ For each input value, the max bit allocation is considered and the maximum upper
 
 ### 2.2 Extensible
 
-A leading `C` provides room for growth if necessary. If the Ledger Index exceeds 268,435,455, the leading `C` may be removed in order to reallocate the Ledger Index up to 32 bit
+A leading `C` provides room for growth if necessary. Shall the Ledger Index exceeds 268,435,455, the leading `C` may be removed in order to reallocate the Ledger Index up to 32 bits.
 
 > This is a maximum total of 4,294,967,295 closed ledgers. Estimated ~400 yrs
 
 ### 2.3 Space Reduction and Savings
 
-By implementing the improved concise transactions identifies (CTIM), it would save occupy a quarter (1/4) of the spaced compared indexing using transaction hashes. See Table 2-2 for a comparisions of the sizes.
+By implementing the improved concise transaction identifies (CTIM), it would occupy a quarter of the spaced as compared to indexing using transaction hashes. See Table 2-2 for size comparisions.
 
 #### Table 2-2. Comparision of Length
 
-| Type             | Characters | Size (bits) |     |
-| ---------------- | ---------- | ----------- | --- |
-| Transaction Hash | 64         | 256         |     |
-| CTIM             | 16         | 64          |     |
+| Type             | Characters | Size (bits) |
+| ---------------- | ---------- | ----------- |
+| Transaction Hash | 64         | 256         |
+| CTIM             | 16         | 64          |
 
 # 3. Specifications
 
