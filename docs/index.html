@@ -15,25 +15,24 @@
 <div class="tsd-panel tsd-typography"><h2 align="left">XRPLF Standards Proposal</h2>
 
 <p align="left">
-0037 XLS-37d - Transaction Identifier (CTIM)
+0037 XLS-37d - Improved Concise Transaction Identifier (CTIM)
 </p>
 
 <blockquote>
 <p>This proposal replaces <a href="https://github.com/XRPLF/XRPL-Standards/discussions/34">XLS-15d</a></p>
 </blockquote>
-<p>&nbsp;</p>
 
 <a href="#abstract" id="abstract" style="color: inherit; text-decoration: none;">
   <h1>Abstract</h1>
 </a>
 <p>This is a proposed standard to easily locate transactions that have been accepted on an XRP Ledger Protocol Chain, according to the ledger sequence they were accepted into rather than the hash of the transaction.</p>
 
-<a href="#1-introduction" id="1-introduction" style="color: inherit; text-decoration: none;">
-  <h1>1. Introduction</h1>
+<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
+  <h1>Introduction</h1>
 </a>
 
-<a href="#11-hashing" id="11-hashing" style="color: inherit; text-decoration: none;">
-  <h4>1.1 Hashing</h4>
+<a href="#hashing" id="hashing" style="color: inherit; text-decoration: none;">
+  <h3>Hashing</h3>
 </a>
 <p>The XRP Ledger uniquely defines ledgers and transactions with a hexidecimal representation. These hexidecimal values are produced using a SHA-512Half hashing function, which transforms data into a SHA-512 hash and then takes the first half of the output.</p>
 <p>Since these hashes are derived from the contents of the data, each hash and its corresponding hexidecimal representation are unique. All hash values on the XRP Ledger are 64 charaters in length (32 bytes or 256 bits) and in hexidecimal format (0-9 / A-F and usually uppercase).</p>
@@ -44,277 +43,46 @@
 <p>Transaction Hash: 1C0FA22BBF5D0A8A7A105EB7D0AD7A2532863AA48584493D4BC45741AEDC4826</p>
 </blockquote>
 
-<a href="#12-indexing" id="12-indexing" style="color: inherit; text-decoration: none;">
-  <h4>1.2. Indexing</h4>
+<a href="#indexing" id="indexing" style="color: inherit; text-decoration: none;">
+  <h3>Indexing</h3>
 </a>
 <p>Ldegers and transactions can also be indentified by their sequenced position on the XRP Ledger.</p>
-
-<a href="#121-ledger-index" id="121-ledger-index" style="color: inherit; text-decoration: none;">
-  <h4>1.2.1 Ledger Index</h4>
-</a>
 <p>As new ledgers are validated on the XRP Ledger, ususally every 3 to 5 seconds, they are assigned an integer based on their positon within in the overall ledger. This enables ledgers to be identified by a ledger index, also referred to as a sequence number. The only limitation is that the ledger needs to be closed before a sequence number can be assigned and used to identification.</p>
 <blockquote>
 <p>Ledger Index: 62084722</p>
 </blockquote>
-
-<a href="#122-transaction-index" id="122-transaction-index" style="color: inherit; text-decoration: none;">
-  <h4>1.2.2 Transaction Index</h4>
-</a>
 <p>During concensous, all nodes on the XRP Ledger will sort and agree upon the order of transactions within a given ledger. This unique sequence of transactions is also referred to as a canonical order. Given the process, every closed, or validated ledger will list transactions in a seqencial order that was agreed upon by the nodes of the network. This means that transactions, like ledgers, can also be identified by an index, so long as the ledger is closed and the ledger index is known.</p>
 <blockquote>
 <p>Ledger Index: 25</p>
 </blockquote>
 
-<a href="#13-motivation" id="13-motivation" style="color: inherit; text-decoration: none;">
-  <h4>1.3 Motivation</h4>
+<a href="#motivation" id="motivation" style="color: inherit; text-decoration: none;">
+  <h3>Motivation</h3>
 </a>
 <p>As the ledger grows in size, optimizations techniques may be considered to limit the storage footprint of nodes and applications building on the XRP Ledger. If a transaction can be indentified by a hash or index, it is advantegous to consider the length each value.</p>
 <p>Like mentioned earlier, the length of a transaction hash is 32 bytes, or 256 bits.</p>
 
-<a href="#table-1-1-transaction-hash-chaacteristics" id="table-1-1-transaction-hash-chaacteristics" style="color: inherit; text-decoration: none;">
-  <h4>Table 1-1. Transaction Hash Chaacteristics</h4>
-</a>
-<table>
-<thead>
-<tr>
-<th>Transaction Hash</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Type</td>
-<td>Hexidecimal</td>
-</tr>
-<tr>
-<td>Characters</td>
-<td>64</td>
-</tr>
-<tr>
-<td>Size (bits)</td>
-<td>256</td>
-</tr>
-<tr>
-<td>Sample</td>
-<td>1C0FA22BBF5D0A8A7A105EB7D0AD7A2532863AA48584493D4BC45741AEDC4826</td>
-</tr>
-</tbody></table>
-<p>At the time of writing, a ledger index is 8 digits ( 3.5 bytes, or 28 bits) holding around 120 transactions (1 byte or 8 bits). This would equate to a 4.5 byte or 36 bit representation.</p>
-<p>Table 1-2. Ledger &amp; Transaction Index Chaacteristics</p>
-<table>
-<thead>
-<tr>
-<th>Ledger Index</th>
-<th></th>
-<th></th>
-<th>Transaction Index</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Type</td>
-<td>Integer</td>
-<td></td>
-<td>Type</td>
-<td>Integer</td>
-</tr>
-<tr>
-<td>Digits</td>
-<td>8</td>
-<td></td>
-<td>Digits</td>
-<td>2</td>
-</tr>
-<tr>
-<td>Size (bits)</td>
-<td>28</td>
-<td></td>
-<td>Size (bits)</td>
-<td>8</td>
-</tr>
-<tr>
-<td>Sample</td>
-<td>62084722</td>
-<td></td>
-<td>Sample</td>
-<td>32</td>
-</tr>
-</tbody></table>
-
-<a href="#2-considerations" id="2-considerations" style="color: inherit; text-decoration: none;">
-  <h1>2. Considerations</h1>
-</a>
-<p>In order for this standard to sustain for next 10 years, the size of the parameters need to be considered to ensure compatibility and extensibity.</p>
-
-<a href="#21-bit-allocations" id="21-bit-allocations" style="color: inherit; text-decoration: none;">
-  <h4>2.1 Bit Allocations</h4>
-</a>
-<p>For each input value, the max bit allocation is considered and the maximum upperbound limit is tabulated.</p>
-
-<a href="#table-2-1-ctim-allocation-limits" id="table-2-1-ctim-allocation-limits" style="color: inherit; text-decoration: none;">
-  <h4>Table 2-1. CTIM Allocation Limits</h4>
-</a>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Size (bits)</th>
-<th>Upperbound</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Ledger Index</td>
-<td>28</td>
-<td>268,435,455</td>
-</tr>
-<tr>
-<td>Transaction Index</td>
-<td>16</td>
-<td>32,767</td>
-</tr>
-<tr>
-<td>Network ID</td>
-<td>16</td>
-<td>32,767</td>
-</tr>
-</tbody></table>
-
-<a href="#22-extensible" id="22-extensible" style="color: inherit; text-decoration: none;">
-  <h4>2.2 Extensible</h4>
-</a>
-<p>A leading <code>C</code> provides room for growth if necessary. If the Ledger Index exceeds 268,435,455, the leading <code>C</code> may be removed in order to reallocate the Ledger Index up to 32 bits.</p>
-<blockquote>
-<p>This is a maximum total of 4,294,967,295 closed ledgers. Estimated ~400 yrs</p>
-</blockquote>
-
-<a href="#23-space-reduction-and-savings" id="23-space-reduction-and-savings" style="color: inherit; text-decoration: none;">
-  <h4>2.3 Space Reduction and Savings</h4>
-</a>
-<p>By implementing the improved concise transactions identifies (CTIM), it would save occupy a quarter (1/4) of the spaced compared indexing using transaction hashes. See Table 2-2 for a comparisions of the sizes.</p>
-
-<a href="#table-2-2-comparision-of-length" id="table-2-2-comparision-of-length" style="color: inherit; text-decoration: none;">
-  <h4>Table 2-2. Comparision of Length</h4>
-</a>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Characters</th>
-<th>Size (bits)</th>
-<th>Savings</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Transaction Hash</td>
-<td>64</td>
-<td>256</td>
-<td>-</td>
-</tr>
-<tr>
-<td>CTIM</td>
-<td>16</td>
-<td>64</td>
-<td>400%</td>
-</tr>
-</tbody></table>
-
-<a href="#3-specifications" id="3-specifications" style="color: inherit; text-decoration: none;">
-  <h1>3. Specifications</h1>
-</a>
-
-<a href="#31-format" id="31-format" style="color: inherit; text-decoration: none;">
-  <h3>3.1 Format</h3>
-</a>
-<p>CTIMs are composed of 16 hex nibbles, and begin with a <code>C</code>.</p>
-<pre><code><span class="hl-0">C</span><span class="hl-1"> [ </span><span class="hl-0">XXXXXXX</span><span class="hl-1"> ] [ </span><span class="hl-0">YYYY</span><span class="hl-1"> ] [ </span><span class="hl-0">ZZZZ</span><span class="hl-1"> ]</span>
-</code></pre>
-<p>The identifier is divided into three fields.</p>
-
-<a href="#table-3-1-comparision-of-bit-lengths" id="table-3-1-comparision-of-bit-lengths" style="color: inherit; text-decoration: none;">
-  <h4>Table 3-1. Comparision of Bit Lengths</h4>
-</a>
-<table>
-<thead>
-<tr>
-<th>Char Offset</th>
-<th>Field</th>
-<th>Size (bits)</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>C</td>
-<td>4</td>
-<td>Lead-in</td>
-</tr>
-<tr>
-<td>1-7</td>
-<td>XXXXXXX</td>
-<td>28</td>
-<td>Ledger Index / Sequence Number</td>
-</tr>
-<tr>
-<td>8-11</td>
-<td>YYYY</td>
-<td>16</td>
-<td>Transaction Index</td>
-</tr>
-<tr>
-<td>12-16</td>
-<td>ZZZZ</td>
-<td>16</td>
-<td>Network ID*</td>
-</tr>
-</tbody></table>
-
-<a href="#4-implementation" id="4-implementation" style="color: inherit; text-decoration: none;">
-  <h1>4. Implementation</h1>
-</a>
-
-<a href="#41-simple-implementation" id="41-simple-implementation" style="color: inherit; text-decoration: none;">
-  <h4>4.1 Simple Implementation</h4>
-</a>
-
-<a href="#411-encoding" id="411-encoding" style="color: inherit; text-decoration: none;">
-  <h4>4.1.1 Encoding</h4>
-</a>
-<p>An example encoding routine in javascript follows:</p>
-<pre><code class="language-js"><span class="hl-2">const</span><span class="hl-1"> </span><span class="hl-3">encodeCTIM</span><span class="hl-1"> = (</span><span class="hl-4">ledger_seq</span><span class="hl-1">, </span><span class="hl-4">txn_index</span><span class="hl-1">, </span><span class="hl-4">network_id</span><span class="hl-1">) </span><span class="hl-2">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">return</span><span class="hl-1"> (</span><br/><span class="hl-1">    ((</span><span class="hl-3">BigInt</span><span class="hl-1">(</span><span class="hl-6">0xc0000000</span><span class="hl-1">) + </span><span class="hl-3">BigInt</span><span class="hl-1">(</span><span class="hl-4">ledger_seq</span><span class="hl-1">)) &lt;&lt; </span><span class="hl-6">32</span><span class="hl-2">n</span><span class="hl-1">) +</span><br/><span class="hl-1">    (</span><span class="hl-3">BigInt</span><span class="hl-1">(</span><span class="hl-4">txn_index</span><span class="hl-1">) &lt;&lt; </span><span class="hl-6">16</span><span class="hl-2">n</span><span class="hl-1">) +</span><br/><span class="hl-1">    </span><span class="hl-3">BigInt</span><span class="hl-1">(</span><span class="hl-4">network_id</span><span class="hl-1">)</span><br/><span class="hl-1">  )</span><br/><span class="hl-1">    .</span><span class="hl-3">toString</span><span class="hl-1">(</span><span class="hl-6">16</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-3">toUpperCase</span><span class="hl-1">();</span><br/><span class="hl-1">};</span>
-</code></pre>
-
-<a href="#412-decoding" id="412-decoding" style="color: inherit; text-decoration: none;">
-  <h4>4.1.2 Decoding</h4>
-</a>
-<pre><code class="language-js"><span class="hl-2">const</span><span class="hl-1"> </span><span class="hl-3">decodeCTIM</span><span class="hl-1"> = (</span><span class="hl-4">ctim</span><span class="hl-1">) </span><span class="hl-2">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">if</span><span class="hl-1"> (</span><span class="hl-2">typeof</span><span class="hl-1"> </span><span class="hl-4">ctim</span><span class="hl-1"> == </span><span class="hl-7">&#39;string&#39;</span><span class="hl-1">) </span><span class="hl-4">ctim</span><span class="hl-1"> = </span><span class="hl-3">BigInt</span><span class="hl-1">(</span><span class="hl-7">&#39;0x&#39;</span><span class="hl-1"> + </span><span class="hl-4">ctim</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-5">return</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-4">ledger_seq:</span><span class="hl-1"> (</span><span class="hl-4">ctim</span><span class="hl-1"> &gt;&gt; </span><span class="hl-6">32</span><span class="hl-2">n</span><span class="hl-1">) &amp; ~</span><span class="hl-6">0xc0000000</span><span class="hl-2">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">txn_index:</span><span class="hl-1"> (</span><span class="hl-4">ctim</span><span class="hl-1"> &gt;&gt; </span><span class="hl-6">16</span><span class="hl-2">n</span><span class="hl-1">) &amp; </span><span class="hl-6">0xffff</span><span class="hl-2">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">network_id:</span><span class="hl-1"> </span><span class="hl-4">ctim</span><span class="hl-1"> &amp; </span><span class="hl-6">0xffff</span><span class="hl-2">n</span><span class="hl-1">,</span><br/><span class="hl-1">  };</span><br/><span class="hl-1">};</span>
-</code></pre>
-
-<a href="#42-advanced-implementation" id="42-advanced-implementation" style="color: inherit; text-decoration: none;">
-  <h4>4.2 Advanced Implementation</h4>
-</a>
-<p>An advanced implementation has been built with error handling and type safety.</p>
-<p>See here for the source code: <a href="https://github.com/standardconnect/xls-37d">https://github.com/standardconnect/xls-37d</a></p>
-<p>Full documentation available here: Coming soon...</p>
-
-<a href="#421-getting-started" id="421-getting-started" style="color: inherit; text-decoration: none;">
-  <h4>4.2.1 Getting Started</h4>
+<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+  <h1>Getting Started</h1>
 </a>
 <p>In an existing project (with package.json), install xls-37d with:</p>
-<pre><code><span class="hl-4">npm</span><span class="hl-1"> </span><span class="hl-4">install</span><span class="hl-1"> </span><span class="hl-4">xls</span><span class="hl-1">-37</span><span class="hl-4">d</span>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> </span><span class="hl-0">xls</span><span class="hl-1">-37</span><span class="hl-0">d</span>
 </code></pre>
 <p>or with yarn</p>
-<pre><code><span class="hl-4">yarn</span><span class="hl-1"> </span><span class="hl-4">add</span><span class="hl-1"> </span><span class="hl-4">xls</span><span class="hl-1">-37</span><span class="hl-4">d</span>
+<pre><code><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-0">add</span><span class="hl-1"> </span><span class="hl-0">xls</span><span class="hl-1">-37</span><span class="hl-0">d</span>
+</code></pre>
+<p>Reference documentation available here: <a href="https://standardconnect.github.io/xls-37d/">https://standardconnect.github.io/xls-37d/</a></p>
+
+<a href="#encoding" id="encoding" style="color: inherit; text-decoration: none;">
+  <h4>Encoding</h4>
+</a>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1"> </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;xls-37d&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">ctim</span><span class="hl-1">, </span><span class="hl-5">bigInt</span><span class="hl-1">, </span><span class="hl-5">hex</span><span class="hl-1">, </span><span class="hl-5">bin</span><span class="hl-1">, </span><span class="hl-5">bytes</span><span class="hl-1"> } = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1">.</span><span class="hl-6">encode</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-0">networkId</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">ledgerIndex</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">txnIndex</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
 </code></pre>
 
-<a href="#422-encoding" id="422-encoding" style="color: inherit; text-decoration: none;">
-  <h4>4.2.2 Encoding</h4>
+<a href="#decoding" id="decoding" style="color: inherit; text-decoration: none;">
+  <h4>Decoding</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-5">import</span><span class="hl-1"> </span><span class="hl-4">xls37d</span><span class="hl-1"> </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-7">&#39;xls-37d&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-2">const</span><span class="hl-1"> { </span><span class="hl-0">ctim</span><span class="hl-1">, </span><span class="hl-0">bigInt</span><span class="hl-1">, </span><span class="hl-0">hex</span><span class="hl-1">, </span><span class="hl-0">bin</span><span class="hl-1">, </span><span class="hl-0">bytes</span><span class="hl-1"> } = </span><span class="hl-2">new</span><span class="hl-1"> </span><span class="hl-4">xls37d</span><span class="hl-1">.</span><span class="hl-3">encode</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">networkId</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">ledger_hash</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">ledger_index</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">txn_hash</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">txn_index</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
-</code></pre>
-
-<a href="#422-decoding" id="422-decoding" style="color: inherit; text-decoration: none;">
-  <h4>4.2.2 Decoding</h4>
-</a>
-<pre><code class="language-ts"><span class="hl-5">import</span><span class="hl-1"> </span><span class="hl-4">xls37d</span><span class="hl-1"> </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-7">&#39;xls-37d&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-2">const</span><span class="hl-1"> { </span><span class="hl-0">networkId</span><span class="hl-1">, </span><span class="hl-0">ledger_hash</span><span class="hl-1">, </span><span class="hl-0">ledger_index</span><span class="hl-1">, </span><span class="hl-0">txn_hash</span><span class="hl-1">, </span><span class="hl-0">txn_index</span><span class="hl-1"> } =</span><br/><span class="hl-1">  </span><span class="hl-2">new</span><span class="hl-1"> </span><span class="hl-4">xls37d</span><span class="hl-1">.</span><span class="hl-3">decode</span><span class="hl-1">(</span><span class="hl-4">ctim</span><span class="hl-1">);</span>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1"> </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;xls-37d&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">networkId</span><span class="hl-1">, </span><span class="hl-5">ledgerIndex</span><span class="hl-1">, </span><span class="hl-5">txnIndex</span><span class="hl-1"> } = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1">.</span><span class="hl-6">decode</span><span class="hl-1">(</span><span class="hl-0">ctim</span><span class="hl-1">);</span>
 </code></pre>
 
 <a href="#references" id="references" style="color: inherit; text-decoration: none;">
