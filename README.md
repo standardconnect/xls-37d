@@ -54,6 +54,8 @@ or with yarn
 yarn add xls-37d
 ```
 
+Reference documentation available here: https://standardconnect.github.io/xls-37d/
+
 #### Encoding
 
 ```ts

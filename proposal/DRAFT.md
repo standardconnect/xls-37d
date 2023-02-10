@@ -155,7 +155,7 @@ An advanced implementation has been built with error handling and type safety.
 
 See here for the source code: https://github.com/standardconnect/xls-37d
 
-Full documentation available here: Coming soon...
+Reference documentation available here: https://standardconnect.github.io/xls-37d/
 
 #### 4.2.1 Getting Started
 
