@@ -12,8 +12,8 @@ export class Decode {
   public bigInt: bigint = 0n;
   public bytes: Buffer | undefined;
   public networkId: number | undefined;
-  public ledger_index: number | undefined;
-  public txn_index: number | undefined;
+  public ledgerIndex: number | undefined;
+  public txnIndex: number | undefined;
 
   constructor(cti: string) {
     this.cti = cti;
@@ -54,11 +54,11 @@ export class Decode {
     );
 
     for (const _key of sort) {
-      if (_key === 'ledger_index') break;
+      if (_key === 'ledgerIndex') break;
       offset += this.def[_key].bits;
     }
-    this.ledger_index = Number(
-      (this.bigInt >> BigInt(offset)) & this.def.ledger_index.getValue
+    this.ledgerIndex = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.ledgerIndex.getValue
     );
   };
 
@@ -69,11 +69,11 @@ export class Decode {
     );
 
     for (const _key of sort) {
-      if (_key === 'txn_index') break;
+      if (_key === 'txnIndex') break;
       offset += this.def[_key].bits;
     }
-    this.txn_index = Number(
-      (this.bigInt >> BigInt(offset)) & this.def.txn_index.getValue
+    this.txnIndex = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.txnIndex.getValue
     );
   };
 }
