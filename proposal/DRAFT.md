@@ -2,17 +2,25 @@
 Title:       Improved Concise Transaction Identifier (CTIM)
 Revision:    1 (2023-02-09)
 Author:      Richard Holland
-             Ryan Molley
+             Ryan Molley (interc0der)
 Affiliation: XRPL-Labs, XRPLF
 ```
 
 > This proposal replaces [XLS-15d](https://github.com/XRPLF/XRPL-Standards/discussions/34)
 
-# Improved Concise Transaction Identifier
+&nbsp;
+
+# Abstract
 
 This is a proposed standard to easily locate transactions that have been accepted on an XRP Ledger Protocol Chain, according to the ledger sequence they were accepted into rather than the hash of the transaction.
 
-## 1. Format
+## Introduction
+
+## Specifications
+
+## Considerations
+
+## Format
 
 CTIMs are composed of 16 hex nibbles, and begin with a `C`.
 
@@ -29,7 +37,7 @@ The identifier is divided into three fields.
 | 8-11        | YYYY    | 16          | Transaction index (offset) within that ledger |
 | 12-16       | ZZZZ    | 16          | Network ID.                                   |
 
-## 2. Encoding
+## Encoding
 
 An example encoding routine in javascript follows:
 
@@ -45,7 +53,7 @@ const encodeCTIM = (ledger_seq, txn_index, network_id) => {
 };
 ```
 
-## 3. Decoding
+## Decoding
 
 ```js
 const decodeCTIM = (ctim) => {
@@ -57,3 +65,5 @@ const decodeCTIM = (ctim) => {
   };
 };
 ```
+
+## References
