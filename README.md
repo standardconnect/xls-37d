@@ -1,4 +1,4 @@
-<h1 align="center">XLS-37d - Improved Concise Transaction Identifier</h1>
+<h1 align="center">XLS-37d - Improved Concise Transaction Identifier (CTIM)</h1>
 
 <p align="center">
 Improved Concise Transaction Identifier
