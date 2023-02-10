@@ -1,0 +1,45 @@
+{
+  "name": "xls-37d",
+  "version": "0.0.1-beta",
+  "description": "XRPF Standards Proposal - Concise Transaction Identification",
+  "main": "./dist/src/index.js",
+  "repository": "https://github.com/standardconnect/xls-37d.git",
+  "author": "interc0der",
+  "license": "MIT",
+  "unpkg": "dist/src/index.js",
+  "jsdelivr": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
+    "c": "rm -rf ./dist && yarn format && yarn gen:docs && tsc && tsc-alias",
+    "gen:json": "yarn ts-node ./scripts/index.ts",
+    "gen:types": "yarn ts-node ./scripts/genType.ts",
+    "gen:docs": "npx typedoc --options typedoc.json",
+    "format": "npx prettier -w .",
+    "/prepublish": "yarn ts-node ./scripts/index.ts && yarn c",
+    "test": "yarn c && jest -all",
+    "pub:beta": "npm run c && npm publish --tag beta",
+    "pub:next": "npm run c && npm publish --tag next",
+    "pub:release": "npm run c && npm publish"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.2.4",
+    "@types/lodash": "^4.14.191",
+    "@types/node": "^18.0.1",
+    "jest": "^29.3.1",
+    "prettier": "^2.8.3",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "typedoc": "^0.23.24",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "tsc-alias": "^1.8.2",
+    "zod": "^3.20.2"
+  }
+}
