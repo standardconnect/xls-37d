@@ -28,7 +28,7 @@ Since these hashes are derived from the contents of the data, each hash and its 
 
 #### 1.2. Indexing
 
-Ldegers and transactions can also be indentified by their sequenced position on the XRP Ledger.
+Ledgers and transactions can also be indentified by their sequenced position on the XRP Ledger.
 
 #### 1.2.1 Ledger Index
 
@@ -48,7 +48,7 @@ As the ledger grows in size, optimizations techniques may be considered to limit
 
 Like mentioned earlier, the length of a transaction hash is 32 bytes, or 256 bits.
 
-#### Table 1-1. Transaction Hash Chaacteristics
+#### Table 1-1. Transaction Hash Chacteristics
 
 | Transaction Hash |                                                                  |
 | ---------------- | ---------------------------------------------------------------- |
@@ -59,7 +59,7 @@ Like mentioned earlier, the length of a transaction hash is 32 bytes, or 256 bit
 
 At the time of writing, a ledger index is 8 digits ( 3.5 bytes, or 28 bits) holding around 120 transactions (1 byte or 8 bits). This would equate to a 4.5 byte or 36 bit representation.
 
-Table 1-2. Ledger & Transaction Index Chaacteristics
+Table 1-2. Ledger & Transaction Index Chacteristics
 
 | Ledger Index |          |     | Transaction Index |         |
 | ------------ | -------- | --- | ----------------- | ------- |

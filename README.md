@@ -1,7 +1,7 @@
 <h2 align="left">XRPLF Standards Proposal</h2>
 
 <p align="left">
-0037 XLS-37d - Transaction Identifier (CTIM)
+0037 XLS-37d - Improved Concise Transaction Identifier (CTIM)
 </p>
 
 > This proposal replaces [XLS-15d](https://github.com/XRPLF/XRPL-Standards/discussions/34)
