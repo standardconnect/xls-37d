@@ -10,9 +10,9 @@
 
 This is a proposed standard to easily locate transactions that have been accepted on an XRP Ledger Protocol Chain, according to the ledger sequence they were accepted into rather than the hash of the transaction.
 
-# 1. Introduction
+# Introduction
 
-#### 1.1 Hashing
+### Hashing
 
 The XRP Ledger uniquely defines ledgers and transactions with a hexidecimal representation. These hexidecimal values are produced using a SHA-512Half hashing function, which transforms data into a SHA-512 hash and then takes the first half of the output.
 
@@ -22,29 +22,25 @@ Since these hashes are derived from the contents of the data, each hash and its 
 
 > Transaction Hash: 1C0FA22BBF5D0A8A7A105EB7D0AD7A2532863AA48584493D4BC45741AEDC4826
 
-#### 1.2. Indexing
+### Indexing
 
 Ldegers and transactions can also be indentified by their sequenced position on the XRP Ledger.
-
-#### 1.2.1 Ledger Index
 
 As new ledgers are validated on the XRP Ledger, ususally every 3 to 5 seconds, they are assigned an integer based on their positon within in the overall ledger. This enables ledgers to be identified by a ledger index, also referred to as a sequence number. The only limitation is that the ledger needs to be closed before a sequence number can be assigned and used to identification.
 
 > Ledger Index: 62084722
 
-#### 1.2.2 Transaction Index
-
 During concensous, all nodes on the XRP Ledger will sort and agree upon the order of transactions within a given ledger. This unique sequence of transactions is also referred to as a canonical order. Given the process, every closed, or validated ledger will list transactions in a seqencial order that was agreed upon by the nodes of the network. This means that transactions, like ledgers, can also be identified by an index, so long as the ledger is closed and the ledger index is known.
 
 > Ledger Index: 25
 
-#### 1.3 Motivation
+### Motivation
 
 As the ledger grows in size, optimizations techniques may be considered to limit the storage footprint of nodes and applications building on the XRP Ledger. If a transaction can be indentified by a hash or index, it is advantegous to consider the length each value.
 
 Like mentioned earlier, the length of a transaction hash is 32 bytes, or 256 bits.
 
-#### 4.2.1 Getting Started
+# Getting Started
 
 In an existing project (with package.json), install xls-37d with:
 
@@ -58,27 +54,24 @@ or with yarn
 yarn add xls-37d
 ```
 
-#### 4.2.2 Encoding
+#### Encoding
 
 ```ts
 import xls37d from 'xls-37d';
 
 const { ctim, bigInt, hex, bin, bytes } = new xls37d.encode({
   networkId,
-  ledger_hash,
-  ledger_index,
-  txn_hash,
-  txn_index,
+  ledgerIndex,
+  txnIndex,
 });
 ```
 
-#### 4.2.2 Decoding
+#### Decoding
 
 ```ts
 import xls37d from 'xls-37d';
 
-const { networkId, ledger_hash, ledger_index, txn_hash, txn_index } =
-  new xls37d.decode(ctim);
+const { networkId, ledgerIndex, txnIndex } = new xls37d.decode(ctim);
 ```
 
 # References

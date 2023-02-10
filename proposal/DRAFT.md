@@ -80,7 +80,7 @@ For each input value, the max bit allocation is considered and the maximum upper
 
 ### 2.2 Extensible
 
-A leading `C` provides room for growth if necessary. If the Ledger Index exceeds 268,435,455, the leading `C` may be removed in order to reallocate the Ledger Index up to 32 bits.
+A leading `C` provides room for growth if necessary. If the Ledger Index exceeds 268,435,455, the leading `C` may be removed in order to reallocate the Ledger Index up to 32 bit
 
 > This is a maximum total of 4,294,967,295 closed ledgers. Estimated ~400 yrs
 
@@ -118,18 +118,18 @@ The identifier is divided into three fields.
 
 # 4. Implementation
 
-### 4.1 Simple Implementation
+### 4.1 Simple
 
 #### 4.1.1 Encoding
 
 An example encoding routine in javascript follows:
 
 ```js
-const encodeCTIM = (ledger_seq, txn_index, network_id) => {
+const encodeCTIM = (ledgerIndex, txnIndex, networkId) => {
   return (
-    ((BigInt(0xc0000000) + BigInt(ledger_seq)) << 32n) +
-    (BigInt(txn_index) << 16n) +
-    BigInt(network_id)
+    ((BigInt(0xc0000000) + BigInt(ledgerIndex)) << 32n) +
+    (BigInt(txnIndex) << 16n) +
+    BigInt(networkId)
   )
     .toString(16)
     .toUpperCase();
@@ -142,14 +142,14 @@ const encodeCTIM = (ledger_seq, txn_index, network_id) => {
 const decodeCTIM = (ctim) => {
   if (typeof ctim == 'string') ctim = BigInt('0x' + ctim);
   return {
-    ledger_seq: (ctim >> 32n) & ~0xc0000000n,
-    txn_index: (ctim >> 16n) & 0xffffn,
-    network_id: ctim & 0xffffn,
+    ledgerIndex: (ctim >> 32n) & ~0xc0000000n,
+    txnIndex: (ctim >> 16n) & 0xffffn,
+    networkId: ctim & 0xffffn,
   };
 };
 ```
 
-### 4.2 Advanced Implementation
+### 4.2 Advanced
 
 An advanced implementation has been built with error handling and type safety.
 
@@ -178,10 +178,8 @@ import xls37d from 'xls-37d';
 
 const { ctim, bigInt, hex, bin, bytes } = new xls37d.encode({
   networkId,
-  ledger_hash,
-  ledger_index,
-  txn_hash,
-  txn_index,
+  ledgerIndex,
+  txnIndex,
 });
 ```
 
@@ -190,8 +188,7 @@ const { ctim, bigInt, hex, bin, bytes } = new xls37d.encode({
 ```ts
 import xls37d from 'xls-37d';
 
-const { networkId, ledger_hash, ledger_index, txn_hash, txn_index } =
-  new xls37d.decode(ctim);
+const { networkId, ledgerIndex, txnIndex } = new xls37d.decode(ctim);
 ```
 
 # References
