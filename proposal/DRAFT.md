@@ -25,7 +25,7 @@ The identifier is divided into three fields, enclosed in brackets `[ ]` below, f
 C [ XXXXXXX ] [ YYYY ] [ ZZZZ ]
 ```
 
-#### Ecoding Protocol
+#### Encoding Protocol
 
 | Char Offset | Field   | Size (bits) | Description                    |
 | ----------- | ------- | ----------- | ------------------------------ |
