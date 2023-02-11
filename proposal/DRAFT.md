@@ -19,7 +19,7 @@ This indentifier is only applicable for validated transactions. Unvalidated tran
 ### Format
 
 CTIMs are composed of 16 hex nibbles, and begin with a `C`.
-The identifier is divided into three fields, enclosed in backets [ ] for readability purposes only.
+The identifier is divided into three fields, enclosed in backets [ ] below, for readability purposes only.
 
 ```
 C [ XXXXXXX ] [ YYYY ] [ ZZZZ ]
