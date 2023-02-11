@@ -123,7 +123,7 @@ By implementing the improved concise transaction identifier (CTIM), it would occ
 
 # 3. Specification
 
-This section is presented in the header of this proposal ( add github permalink )
+This section is [enclosed](https://github.com/standardconnect/xls-37d/blob/main/proposal/DRAFT.md?plain=1#L17) in the header of the proposal
 
 # 4. Implementation
 
