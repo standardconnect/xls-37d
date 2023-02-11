@@ -12,14 +12,14 @@ Affiliation: XRPL-Labs, XRPLF
 
 This is a proposed standard to locate transactions that have been accepted on an XRP Ledger Protocol Chain, according to their ledger sequence rather than the hash of the transaction.
 
-This indentifier is only applicable for validated transactions. Unvalidated transactions, whether unsubmitted or locally rejected, would not have a consensus canonical order, and thus, this type of identifier would not apply.
+This identifier is only applicable for validated transactions. Unvalidated transactions, whether unsubmitted or locally rejected, would not have a consensus canonical order, and thus, this type of identifier would not apply.
 
 # Specification
 
 ### Format
 
 CTIMs are composed of 16 hex nibbles, and begin with a `C`.
-The identifier is divided into three fields, enclosed in backets [ ] below, for readability purposes only.
+The identifier is divided into three fields, enclosed in brackets [ ] below, for readability purposes only.
 
 ```
 C [ XXXXXXX ] [ YYYY ] [ ZZZZ ]
@@ -40,9 +40,9 @@ C [ XXXXXXX ] [ YYYY ] [ ZZZZ ]
 
 ### 1.1 Hashing
 
-The XRP Ledger uniquely defines ledgers and transactions with a hexidecimal representation. These hexidecimal values are produced using a namespace-biased 'SHA-512Half' hashing function, which transforms data into a SHA-512 hash and then takes the first half of the output.
+The XRP Ledger uniquely defines ledgers and transactions with a hexadecimal representation. These hexadecimal values are produced using a namespace-biased 'SHA-512Half' hashing function, which transforms data into a SHA-512 hash and then takes the first half of the output.
 
-Since these hashes are derived from the contents of the data, each hash is unique and are completely independent of ledger consensus. All hash values on the XRP Ledger are 64 charaters in length (32 bytes or 256 bits) and in hexidecimal format (0-9 / A-F and usually uppercase). [[1]](https://xrpl.org/basic-data-types.html#hashes)
+Since these hashes are derived from the contents of the data, each hash is unique and are completely independent of ledger consensus. All hash values on the XRP Ledger are 64 characters in length (32 bytes or 256 bits) and in hexadecimal format (0-9 / A-F and usually uppercase). [[1]](https://xrpl.org/basic-data-types.html#hashes)
 
 > Ledger Hash: F8A87917637D476E871D22A1376D7C129DAC9E25D45AD4B67D1E75EA4418654C
 
@@ -50,14 +50,14 @@ Since these hashes are derived from the contents of the data, each hash is uniqu
 
 ### 1.2. Indexing
 
-Ledgers and transactions can also be indentified by their sequenced position on the XRP Ledger.
+Ledgers and transactions can also be identified by their sequenced position on the XRP Ledger.
 
-As new ledgers are validated on the XRP Ledger, ususally every 3 to 5 seconds, they are assigned an integer based on their positon within in the overall ledger.
+As new ledgers are validated on the XRP Ledger, usually every 3 to 5 seconds, they are assigned an integer based on their position within in the overall ledger.
 This enables ledgers to be identified by a `ledger_index`, also referred to as a sequence number [[2]](https://xrpl.org/basic-data-types.html#ledger-index) [[3]](https://xrpl.org/ledger-header.html) and thought to be more user-friendly over its hash-base counterpart. The only limitation is that the ledger needs to be closed before a sequence number can be assigned and used for identification.
 
 > Ledger Index: 62084722
 
-During consensus, all nodes on the XRP Ledger will sort and agree upon the order of transactions within a given ledger. This unique sequence of transactions is also referred to as a canonical order. [[4]](https://xrpl.org/consensus.html) Given the process, every closed, or validated ledger will list transactions in a seqencial order that was agreed upon by the nodes of the network. This means that transactions, like ledgers, can also be identified by their offset index, so long as the ledger is closed and the ledger index is known. This offset is present in the transaction metadata as `TransactionIndex`.[[5]](https://xrpl.org/transaction-metadata.html)
+During consensus, all nodes on the XRP Ledger will sort and agree upon the order of transactions within a given ledger. This unique sequence of transactions is also referred to as a canonical order. [[4]](https://xrpl.org/consensus.html) Given the process, every closed, or validated ledger will list transactions in a sequential order that was agreed upon by the nodes of the network. This means that transactions, like ledgers, can also be identified by their offset index, so long as the ledger is closed and the ledger index is known. This offset is present in the transaction metadata as `TransactionIndex`.[[5]](https://xrpl.org/transaction-metadata.html)
 
 > Ledger Index: 25
 
@@ -65,22 +65,22 @@ During consensus, all nodes on the XRP Ledger will sort and agree upon the order
 
 As the ledger grows in size, optimization techniques may be considered to limit the storage footprint of nodes and applications building on the XRP Ledger.
 
-It may be useful, in a range of applications, to be able to uniquely identify a transaction by the point at which it was validated rather than by its explicit contents. If a transaction has been validated and can be indentified by a hash or index, it is advantegous to consider the length each value.
+It may be useful, in a range of applications, to be able to uniquely identify a transaction by the point at which it was validated rather than by its explicit contents. If a transaction has been validated and can be identified by a hash or index, it is advantageous to consider the length each value.
 
 Like mentioned earlier, the length of a transaction hash is 32 bytes, or 256 bits.
 
-#### Table 1-1. Transaction Hash Chacteristics
+#### Table 1-1. Transaction Hash Characteristics
 
 | Transaction Hash |                                                                  |
 | ---------------- | ---------------------------------------------------------------- |
-| Type             | Hexidecimal                                                      |
+| Type             | Hexadecimal                                                      |
 | Characters       | 64                                                               |
 | Size (bits)      | 256                                                              |
 | Sample           | 1C0FA22BBF5D0A8A7A105EB7D0AD7A2532863AA48584493D4BC45741AEDC4826 |
 
 At the time of writing, a ledger index is 8 digits (28 bits) holding around 120 transactions (8 bits). This would approximate to a 36 bit allocation.
 
-#### Table 1-2. Ledger & Transaction Index Chacteristics
+#### Table 1-2. Ledger & Transaction Index Characteristics
 
 | Ledger Index |          |     | Transaction Index |         |
 | ------------ | -------- | --- | ----------------- | ------- |
@@ -94,11 +94,11 @@ At the time of writing, a ledger index is 8 digits (28 bits) holding around 120 
 ### 2.1 Bit Allocations
 
 To future-proof these identifiers for at least the next decade, the parameters and their sizes are considered to ensure compatibility and extensibility.
-For each input value, the maximum bit allocation is considered and the upperbound limit is tabulated.
+For each input value, the maximum bit allocation is considered assuming an unsigned integer (uint) and the upper-bound limit is tabulated.
 
 #### Table 2-1. CTIM Allocation Limits
 
-| Type              | Size (bits) | Upperbound  |
+| Type              | Size (bits) | Limt (uint) |
 | ----------------- | ----------- | ----------- |
 | Ledger Index      | 28          | 268,435,455 |
 | Transaction Index | 16          | 65,535      |
@@ -132,7 +132,7 @@ Two different implementations for the Improved Concise Transaction Identifier (C
 - Simple
 - Advanced
 
-The first is a simplified method which is intended for easier self-implementation and adoption. The second is a more robusted version with type checking ands error handling.
+The first is a simplified method which is intended for easier self-implementation and adoption. The second is a more robust version with type checking ands error handling.
 
 ### 4.1 Simple
 
