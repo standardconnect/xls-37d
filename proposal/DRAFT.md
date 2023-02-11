@@ -219,8 +219,6 @@ const { networkId, lgrIndex, txnIndex } = new xls37d.decode(ctim);
 
 ## List of applications to adopt CTIM
 
----
-
 - [Rippled Source Code]()
 
 - [XUMM Backend]()
