@@ -19,7 +19,7 @@ This identifier is only applicable for validated transactions. Unvalidated trans
 ### Format
 
 CTIMs are composed of 16 hex nibbles, and begin with a `C`.
-The identifier is divided into three fields, enclosed in brackets [ ] below, for readability purposes only.
+The identifier is divided into three fields, enclosed in brackets `[ ]` below, for readability purposes only.
 
 ```
 C [ XXXXXXX ] [ YYYY ] [ ZZZZ ]
@@ -112,9 +112,9 @@ A leading `C` provides room for growth. Shall the number of closed ledgers excee
 
 ### 2.3 Space Reduction and Savings
 
-By implementing the improved concise transaction identifier (CTIM), it would occupy a quarter of the spaced as compared to indexing using transaction hashes. See Table 2-2 for size comparisions.
+By implementing the improved concise transaction identifier (CTIM), it would occupy a quarter of the spaced as compared to indexing using transaction hashes. See Table 2-2 for size comparisons.
 
-#### Table 2-2. Comparision of Length
+#### Table 2-2. Comparison of Length
 
 | Type                                    | Characters | Size (bits) |
 | --------------------------------------- | ---------- | ----------- |
