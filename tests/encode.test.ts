@@ -1,6 +1,5 @@
 import xls37d from '../dist/src/index';
 import constants from './constants';
-import { encodeCTIM } from './ctim/ctim';
 
 describe('ctim', () => {
   test('simple-encode', () => {
@@ -41,43 +40,23 @@ describe('ctim', () => {
     expect(ctim).toEqual('C3B3567200190001');
 
     expect(new xls37d.encode(constants.improved1).ctim).toEqual(
-      encodeCTIM(
-        constants.improved1.lgrIndex,
-        constants.improved1.txnIndex,
-        constants.improved1.networkId
-      )
+      'C0CA2AA7326FC045'
     );
 
     expect(new xls37d.encode(constants.improved2).ctim).toEqual(
-      encodeCTIM(
-        constants.improved2.lgrIndex,
-        constants.improved2.txnIndex,
-        constants.improved2.networkId
-      )
+      'C000000000000000'
     );
 
     expect(new xls37d.encode(constants.improved3).ctim).toEqual(
-      encodeCTIM(
-        constants.improved3.lgrIndex,
-        constants.improved3.txnIndex,
-        constants.improved3.networkId
-      )
+      'C000000100020003'
     );
 
     expect(new xls37d.encode(constants.improved4).ctim).toEqual(
-      encodeCTIM(
-        constants.improved4.lgrIndex,
-        constants.improved4.txnIndex,
-        constants.improved4.networkId
-      )
+      'CFFFFFFFFFFFFFFF'
     );
 
     expect(new xls37d.encode(constants.improved4).ctim).toEqual(
-      encodeCTIM(
-        constants.improved4.lgrIndex,
-        constants.improved4.txnIndex,
-        constants.improved4.networkId
-      )
+      'CFFFFFFFFFFFFFFF'
     );
   });
 });

@@ -5,7 +5,6 @@ describe('ctim', () => {
     const { networkId, lgrIndex, txnIndex } = new xls37d.decode(
       'C3B3567200190001'
     );
-    console.log(networkId, lgrIndex, txnIndex);
     expect(networkId).toEqual(1);
     expect(lgrIndex).toEqual(62084722);
     expect(txnIndex).toEqual(25);
@@ -15,7 +14,6 @@ describe('ctim', () => {
     const { networkId, lgrIndex, txnIndex } = new xls37d.decode(
       'C0CA2AA7326FC045'
     );
-    console.log(networkId, lgrIndex, txnIndex);
     expect(networkId).toEqual(49221);
     expect(lgrIndex).toEqual(13249191);
     expect(txnIndex).toEqual(12911);
@@ -25,7 +23,6 @@ describe('ctim', () => {
     const { networkId, lgrIndex, txnIndex } = new xls37d.decode(
       'C000000000000000'
     );
-    console.log(networkId, lgrIndex, txnIndex);
     expect(networkId).toEqual(0);
     expect(lgrIndex).toEqual(0);
     expect(txnIndex).toEqual(0);
@@ -35,7 +32,6 @@ describe('ctim', () => {
     const { networkId, lgrIndex, txnIndex } = new xls37d.decode(
       'C000000100020003'
     );
-    console.log(networkId, lgrIndex, txnIndex);
     expect(networkId).toEqual(3);
     expect(lgrIndex).toEqual(1);
     expect(txnIndex).toEqual(2);
@@ -45,7 +41,6 @@ describe('ctim', () => {
     const { networkId, lgrIndex, txnIndex } = new xls37d.decode(
       'CFFFFFFFFFFFFFFF'
     );
-    console.log(networkId, lgrIndex, txnIndex);
     expect(networkId).toEqual(Number((0xffff).toString(10)));
     expect(lgrIndex).toEqual(Number((0xfffffff).toString(10)));
     expect(txnIndex).toEqual(Number((0xffff).toString(10)));
