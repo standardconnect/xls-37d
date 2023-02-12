@@ -51,7 +51,7 @@ Example Transaction Hash (ID):
 
 > C4E284010276F8457C4BF96D0C534B7383087680C159F9B8C18D5EE876F7EFE7
 
-### 1.2 An alternative: Indexing
+### 1.2 An Alternative: Indexing
 
 Ledgers and transactions can be identified by their sequenced position.
 
