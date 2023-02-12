@@ -159,14 +159,12 @@ In an existing project (with package.json), install xls-37d with:
 
 ```
 npm install xls-37d
-
 ```
 
 or with yarn:
 
 ```
 yarn add xls-37d
-
 ```
 
 ### 4.2.2 Encoding
