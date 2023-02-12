@@ -149,9 +149,9 @@ const decodeCTIM = (ctim) => {
 
 ### 4.2 Advanced
 
-See here for the source code: [https://github.com/standardconnect/xls-37d](https://github.com/standardconnect/xls-37d)
+See [here](https://github.com/standardconnect/xls-37d](https://github.com/standardconnect/xls-37d) for the source code.
 
-Reference documentation available here: [https://standardconnect.github.io/xls-37d/](https://standardconnect.github.io/xls-37d/)
+Reference documentation available [here].(https://standardconnect.github.io/xls-37d/](https://standardconnect.github.io/xls-37d/)
 
 ### 4.2.1 Getting Started
 
