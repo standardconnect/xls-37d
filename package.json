@@ -1,6 +1,6 @@
 {
   "name": "xls-37d",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "description": "XRPF Standards Proposal - Improved Concise Transaction Identifier (CTIM)",
   "main": "./dist/src/index.js",
   "repository": "https://github.com/standardconnect/xls-37d.git",
