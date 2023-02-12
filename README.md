@@ -6,7 +6,9 @@
 
 # Abstract
 
-This is a proposed standard to easily locate transactions that have been accepted on an XRP Ledger Protocol Chain, according to the ledger sequence they were accepted into rather than the hash of the transaction.
+This standard provides a way to locate a _validated_ transaction on any XRP Ledger Protocol Chain using its ledger sequence number, transaction index, and network ID rather than its transaction hash.
+
+This identifier is only applicable for validated transactions. Non-validated or unsubmitted transactions cannot be identified using a CTIM.
 
 # Getting Started
 
@@ -31,9 +33,9 @@ An example encoding routine in typescript follows:
 ```ts
 import xls37d from 'xls-37d';
 
-const { ctim, bigInt, hex, bin, bytes } = new xls37d.encode({
+const { ctim } = new xls37d.encode({
   networkId,
-  ledgerIndex,
+  lgrIndex,
   txnIndex,
 });
 ```
@@ -45,7 +47,7 @@ An example decoding routine in typescript follows:
 ```ts
 import xls37d from 'xls-37d';
 
-const { networkId, ledgerIndex, txnIndex } = new xls37d.decode(ctim);
+const { networkId, lgrIndex, txnIndex } = new xls37d.decode(ctim);
 ```
 
 # Background
