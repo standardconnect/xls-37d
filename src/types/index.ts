@@ -1,3 +1,3 @@
-import { ICtiEncodeParams } from './cti';
+import { IEncodeParams } from './ctim';
 
-export default ICtiEncodeParams;
+export default IEncodeParams;

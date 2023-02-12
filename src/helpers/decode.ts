@@ -5,24 +5,22 @@ export class Decode {
   public T: bigint = 0n;
   public L: bigint = 0n;
 
-  public cti: string | undefined;
+  public ctim: string | undefined;
   public hex: string | undefined;
   public bin: string | undefined;
   public uri: string = '';
   public bigInt: bigint = 0n;
   public bytes: Buffer | undefined;
   public networkId: number | undefined;
-  public ledgerIndex: number | undefined;
+  public lgrIndex: number | undefined;
   public txnIndex: number | undefined;
 
-  constructor(cti: string) {
-    this.cti = cti;
-    this.def = definitions['mod'];
-    this.bigInt = BigInt(this.cti);
-    this.hex = '0x' + this.bigInt.toString(16).toUpperCase();
+  constructor(ctim: string) {
+    this.ctim = ctim;
+    this.def = definitions['improved'];
+    this.hex = '0x' + ctim;
+    this.bigInt = BigInt(this.hex);
     this.bin = this.bigInt.toString(2);
-    this.cti = this.bigInt.toString();
-    this.uri = 'cti:' + this.cti;
     this.getNetworkId();
     this.getLedger();
     this.getTx();
@@ -42,6 +40,7 @@ export class Decode {
       if (_key === 'networkId') break;
       offset += this.def[_key].bits;
     }
+
     this.networkId = Number(
       (this.bigInt >> BigInt(offset)) & this.def.networkId.getValue
     );
@@ -54,11 +53,11 @@ export class Decode {
     );
 
     for (const _key of sort) {
-      if (_key === 'ledgerIndex') break;
+      if (_key === 'lgrIndex') break;
       offset += this.def[_key].bits;
     }
-    this.ledgerIndex = Number(
-      (this.bigInt >> BigInt(offset)) & this.def.ledgerIndex.getValue
+    this.lgrIndex = Number(
+      (this.bigInt >> BigInt(offset)) & this.def.lgrIndex.getValue
     );
   };
 

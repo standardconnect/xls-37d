@@ -1,6 +1,6 @@
 export const definitions = {
   simple: {
-    ledgerIndex: {
+    lgrIndex: {
       nth: 4,
       bits: 32,
       getValue: 0xffffffffn,
@@ -12,7 +12,7 @@ export const definitions = {
       getValue: 0xffffn,
       type: 'number',
     },
-    ledgerHash: {
+    lgrHash: {
       nth: 1,
       checksum: true,
       bits: 4,
@@ -32,7 +32,7 @@ export const definitions = {
       nth: 4,
       bits: 16,
     },
-    ledgerIndex: {
+    lgrIndex: {
       nth: 5,
       bits: 32,
       varies: true,
@@ -46,7 +46,7 @@ export const definitions = {
       nth: 1,
       bits: 1,
     },
-    ledgerHash: {
+    lgrHash: {
       nth: 2,
       checksum: true,
       bits: 4,
@@ -57,14 +57,14 @@ export const definitions = {
       bits: 4,
     },
   },
-  mod: {
+  modified: {
     networkId: {
       nth: 3,
       bits: 16,
       getValue: 0xffffn,
       type: 'number',
     },
-    ledgerIndex: {
+    lgrIndex: {
       nth: 1,
       bits: 32,
       getValue: 0xffffffffn,
@@ -78,17 +78,28 @@ export const definitions = {
     },
   },
   improved: {
-    networkId: {
-      nth: 3,
-      bits: 16,
-    },
-    ledgerIndex: {
+    lead: {
+      value: 'C',
       nth: 1,
-      bits: 32,
+      bits: 4,
+    },
+    networkId: {
+      nth: 4,
+      bits: 16,
+      getValue: 0xffffn,
+      type: 'number',
+    },
+    lgrIndex: {
+      nth: 2,
+      bits: 28,
+      getValue: 0xfffffffn,
+      type: 'number',
     },
     txnIndex: {
-      nth: 2,
+      nth: 3,
       bits: 16,
+      getValue: 0xffffn,
+      type: 'number',
     },
   },
 };
