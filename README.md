@@ -12,6 +12,8 @@ This identifier is only applicable for validated transactions. Non-validated or 
 
 # Getting Started
 
+[![NPM](https://nodei.co/npm/xls-37d.png)](https://www.npmjs.com/package/xls-37d)
+
 In an existing project (with package.json), install xls-37d with:
 
 ```
