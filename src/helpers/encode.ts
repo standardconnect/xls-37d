@@ -1,4 +1,4 @@
-import { IEncodeParams } from '../types/ctim';
+import { IEncodeParams } from '../types/ctid';
 import { BytesList, UintArray } from '../buffers';
 import { definitions } from '../def';
 
@@ -10,7 +10,7 @@ export class Encode {
   public L: bigint = 0n;
   private bits: number[] = [];
 
-  public ctim: string | undefined;
+  public ctid: string | undefined;
   public hex: string | undefined;
   public bin: string | undefined;
   public bigInt: bigint = 0n;
@@ -157,7 +157,7 @@ export class Encode {
 
     this.hex = '0x' + this.bigInt.toString(16).toUpperCase();
     this.bin = this.bigInt.toString(2);
-    this.ctim =
+    this.ctid =
       this.type !== 'improved' ? this.bigInt.toString() : this.hex.slice(2);
   };
 

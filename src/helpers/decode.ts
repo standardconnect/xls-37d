@@ -5,7 +5,7 @@ export class Decode {
   public T: bigint = 0n;
   public L: bigint = 0n;
 
-  public ctim: string | undefined;
+  public ctid: string | undefined;
   public hex: string | undefined;
   public bin: string | undefined;
   public uri: string = '';
@@ -15,10 +15,10 @@ export class Decode {
   public lgrIndex: number | undefined;
   public txnIndex: number | undefined;
 
-  constructor(ctim: string) {
-    this.ctim = ctim;
+  constructor(ctid: string) {
+    this.ctid = ctid;
     this.def = definitions['improved'];
-    this.hex = '0x' + ctim;
+    this.hex = '0x' + ctid;
     this.bigInt = BigInt(this.hex);
     this.bin = this.bigInt.toString(2);
     this.getNetworkId();
