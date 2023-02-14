@@ -1,7 +1,7 @@
-# 0037 XLS-37d: Improved Concise Transaction Identifier (CTIM)
+# 0037 XLS-37d: Improved Concise Transaction Identifier (CTID)
 
 ```
-Title:       Improved Concise Transaction Identifier (CTIM)
+Title:       Improved Concise Transaction Identifier (CTID)
 Revision:    1 (2023-02-11)
 Author:      Richard Holland (XRPL-Labs, XRPLF)
              Ryan Molley
@@ -11,19 +11,19 @@ Author:      Richard Holland (XRPL-Labs, XRPLF)
 
 # Quickstart
 
-If you are a developer and want to get started quickly with integrating CTIM please visit [the quickstart repo](https://github.com/xrplf/ctim).
+If you are a developer and want to get started quickly with integrating CTID's, please visit [the quickstart repo](https://github.com/xrplf/ctid).
 
 # Abstract
 
 This standard provides a way to locate a _validated_ transaction on any XRP Ledger Protocol Chain using its ledger sequence number, transaction index, and network ID rather than its transaction hash.
 
-This identifier is only applicable for validated transactions. Non-validated or unsubmitted transactions cannot be identified using a CTIM.
+This identifier is only applicable for validated transactions. Non-validated or unsubmitted transactions cannot be identified using a CTID.
 
 # Specification
 
 ### Format
 
-CTIMs are composed of 16 uppercase hex nibbles, and always begin with a `C`.
+CTIDs are composed of 16 uppercase hex nibbles, and always begin with a `C`.
 The identifier is divided into three fields and a single _lead-in_ nibble:
 
 ```
@@ -90,17 +90,17 @@ The XRP Ledger is poised to become (or depending on the time of reading: has alr
 
 ### 2.1 Bit Allocations
 
-To future-proof CTIM identifiers, the parameters and their sizes and lifespans are considered:
+To future-proof CTID identifiers, the parameters and their sizes and lifespans are considered:
 
 | Field             | Size (bits) | Limit (decimal) | Lifespan                                                     | Explanation                                                                                                                                                                                                 |
 | ----------------- | ----------- | --------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Ledger Index      | 28          | 268,435,455     | 34 years from genesis                                        | This field would otherwise be 32 bits but for the C lead-in nibble. We feel the easily identified C is more useful than an extremely long lifespan.                                                         |
-| Transaction Index | 16          | 65,535          | ∞ / until there are more than 65,535 transactions per ledger | It is very unlikely there will be more than 65535 transactions per ledger in any XRPL Protocol Chain for a long time. If there are then those above this limit still exist but cannot be identified a CTIM. |
+| Transaction Index | 16          | 65,535          | ∞ / until there are more than 65,535 transactions per ledger | It is very unlikely there will be more than 65535 transactions per ledger in any XRPL Protocol Chain for a long time. If there are then those above this limit still exist but cannot be identified a CTID. |
 | Network ID        | 16          | 65,535          | ∞ / until there are more than 65535 ports allowed in TCP     | In XRPL Protocol Chains the Network ID should match the chosen peer port. Thus the natural limitation on Network ID is that of the TCP port (65536).                                                        |
 
 ### 2.2 Extensible
 
-A leading `C` provides easy human identification of the format, but also room for growth. If the number of closed ledgers on a particular chain exceeds 268,435,455, the leading `C` may be incremented to `D`, `E` and `F` allowing for an additional 100 years of use. It is not expected this will be necessary as another standard will likely replace it by this time. As of 2023, all CTIMs always start with a `C` and this will almost certainly be the case for at least the next 20 years.
+A leading `C` provides easy human identification of the format, but also room for growth. If the number of closed ledgers on a particular chain exceeds 268,435,455, the leading `C` may be incremented to `D`, `E` and `F` allowing for an additional 100 years of use. It is not expected this will be necessary as another standard will likely replace it by this time. As of 2023, all CTIDs always start with a `C` and this will almost certainly be the case for at least the next 20 years.
 
 ### 2.3 Space Reduction and Savings
 
@@ -112,9 +112,9 @@ This section is [enclosed](https://github.com/standardconnect/xls-37d/blob/main/
 
 # 4. Implementations
 
-Diverse implementations (in multiple languages) with test cases and explanations are available at [the quickstart repo](<[https://github.com/xrplf/ctim](https://github.com/xrplf/ctim)>).
+Diverse implementations (in multiple languages) with test cases and explanations are available at [the quickstart repo](<[https://github.com/xrplf/CTID](https://github.com/xrplf/ctid)>).
 
-Two different implementations for the Improved Concise Transaction Identifier (CTIM) are presented in this XLS.
+Two different implementations for the Improved Concise Transaction Identifiers (CTID) are presented in this XLS.
 
 - Simple
 - Advanced
@@ -126,7 +126,7 @@ The first is a simplified method which is intended for easier self-implementatio
 An example encoding routine in javascript follows:
 
 ```
-const encodeCTIM = (lgrIndex, txnIndex, networkId) => {
+const encodeCTID = (lgrIndex, txnIndex, networkId) => {
   return (
     ((BigInt(0xc0000000) + BigInt(lgrIndex)) << 32n) +
     (BigInt(txnIndex) << 16n) +
@@ -136,12 +136,12 @@ const encodeCTIM = (lgrIndex, txnIndex, networkId) => {
     .toUpperCase();
 };
 
-const decodeCTIM = (ctim) => {
-  if (typeof ctim == 'string') ctim = BigInt('0x' + ctim);
+const decodeCTID = (ctid) => {
+  if (typeof ctid == 'string') CTID = BigInt('0x' + ctid);
   return {
-    lgrIndex: (ctim >> 32n) & ~0xc0000000n,
-    txnIndex: (ctim >> 16n) & 0xffffn,
-    networkId: ctim & 0xffffn,
+    lgrIndex: (ctid >> 32n) & ~0xc0000000n,
+    txnIndex: (ctid >> 16n) & 0xffffn,
+    networkId: ctid & 0xffffn,
   };
 };
 
@@ -174,7 +174,7 @@ An example encoding routine in typescript follows:
 ```tsx
 import xls37d from 'xls-37d';
 
-const { ctim } = new xls37d.encode({
+const { ctid } = new xls37d.encode({
   networkId,
   lgrIndex,
   txnIndex,
@@ -188,7 +188,7 @@ An example decoding routine in typescript follows:
 ```tsx
 import xls37d from 'xls-37d';
 
-const { networkId, lgrIndex, txnIndex } = new xls37d.decode(ctim);
+const { networkId, lgrIndex, txnIndex } = new xls37d.decode(ctid);
 ```
 
 # References

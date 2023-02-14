@@ -1,14 +1,14 @@
 <h2 align="left">XRPLF Standards Proposal</h2>
 
 <p align="left">
-0037 XLS-37d - Improved Concise Transaction Identifier (CTIM)
+0037 XLS-37d - Improved Concise Transaction Identifier (CTID)
 </p>
 
 # Abstract
 
 This standard provides a way to locate a _validated_ transaction on any XRP Ledger Protocol Chain using its ledger sequence number, transaction index, and network ID rather than its transaction hash.
 
-This identifier is only applicable for validated transactions. Non-validated or unsubmitted transactions cannot be identified using a CTIM.
+This identifier is only applicable for validated transactions. Non-validated or unsubmitted transactions cannot be identified using a CTID.
 
 # Getting Started
 
@@ -35,7 +35,7 @@ An example encoding routine in typescript follows:
 ```ts
 import xls37d from 'xls-37d';
 
-const { ctim } = new xls37d.encode({
+const { ctid } = new xls37d.encode({
   networkId,
   lgrIndex,
   txnIndex,
@@ -49,7 +49,7 @@ An example decoding routine in typescript follows:
 ```ts
 import xls37d from 'xls-37d';
 
-const { networkId, lgrIndex, txnIndex } = new xls37d.decode(ctim);
+const { networkId, lgrIndex, txnIndex } = new xls37d.decode(ctid);
 ```
 
 # Background

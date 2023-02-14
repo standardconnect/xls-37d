@@ -1,3 +1,3 @@
-import { IEncodeParams } from './ctim';
+import { IEncodeParams } from './ctid';
 
 export default IEncodeParams;

@@ -15,79 +15,76 @@
 <div class="tsd-panel tsd-typography"><h2 align="left">XRPLF Standards Proposal</h2>
 
 <p align="left">
-0037 XLS-37d - Improved Concise Transaction Identifier (CTIM)
+0037 XLS-37d - Improved Concise Transaction Identifier (CTID)
 </p>
 
-<blockquote>
-<p>This proposal replaces <a href="https://github.com/XRPLF/XRPL-Standards/discussions/34">XLS-15d</a></p>
-</blockquote>
 
 <a href="#abstract" id="abstract" style="color: inherit; text-decoration: none;">
   <h1>Abstract</h1>
 </a>
-<p>This is a proposed standard to easily locate transactions that have been accepted on an XRP Ledger Protocol Chain, according to the ledger sequence they were accepted into rather than the hash of the transaction.</p>
-
-<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
-  <h1>Introduction</h1>
-</a>
-
-<a href="#hashing" id="hashing" style="color: inherit; text-decoration: none;">
-  <h3>Hashing</h3>
-</a>
-<p>The XRP Ledger uniquely defines ledgers and transactions with a hexidecimal representation. These hexidecimal values are produced using a SHA-512Half hashing function, which transforms data into a SHA-512 hash and then takes the first half of the output.</p>
-<p>Since these hashes are derived from the contents of the data, each hash and its corresponding hexidecimal representation are unique. All hash values on the XRP Ledger are 64 charaters in length (32 bytes or 256 bits) and in hexidecimal format (0-9 / A-F and usually uppercase).</p>
-<blockquote>
-<p>Ledger Hash: F8A87917637D476E871D22A1376D7C129DAC9E25D45AD4B67D1E75EA4418654C</p>
-</blockquote>
-<blockquote>
-<p>Transaction Hash: 1C0FA22BBF5D0A8A7A105EB7D0AD7A2532863AA48584493D4BC45741AEDC4826</p>
-</blockquote>
-
-<a href="#indexing" id="indexing" style="color: inherit; text-decoration: none;">
-  <h3>Indexing</h3>
-</a>
-<p>Ldegers and transactions can also be indentified by their sequenced position on the XRP Ledger.</p>
-<p>As new ledgers are validated on the XRP Ledger, ususally every 3 to 5 seconds, they are assigned an integer based on their positon within in the overall ledger. This enables ledgers to be identified by a ledger index, also referred to as a sequence number. The only limitation is that the ledger needs to be closed before a sequence number can be assigned and used to identification.</p>
-<blockquote>
-<p>Ledger Index: 62084722</p>
-</blockquote>
-<p>During consensus, all nodes on the XRP Ledger will sort and agree upon the order of transactions within a given ledger. This unique sequence of transactions is also referred to as a canonical order. Given the process, every closed, or validated ledger will list transactions in a seqencial order that was agreed upon by the nodes of the network. This means that transactions, like ledgers, can also be identified by an index, so long as the ledger is closed and the ledger index is known.</p>
-<blockquote>
-<p>Ledger Index: 25</p>
-</blockquote>
-
-<a href="#motivation" id="motivation" style="color: inherit; text-decoration: none;">
-  <h3>Motivation</h3>
-</a>
-<p>As the ledger grows in size, optimizations techniques may be considered to limit the storage footprint of nodes and applications building on the XRP Ledger. If a transaction can be indentified by a hash or index, it is advantegous to consider the length each value.</p>
-<p>Like mentioned earlier, the length of a transaction hash is 32 bytes, or 256 bits.</p>
+<p>This standard provides a way to locate a <em>validated</em> transaction on any XRP Ledger Protocol Chain using its ledger sequence number, transaction index, and network ID rather than its transaction hash.</p>
+<p>This identifier is only applicable for validated transactions. Non-validated or unsubmitted transactions cannot be identified using a CTID.</p>
 
 <a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
   <h1>Getting Started</h1>
 </a>
+<p><a href="https://www.npmjs.com/package/xls-37d"><img src="https://nodei.co/npm/xls-37d.png" alt="NPM"></a></p>
 <p>In an existing project (with package.json), install xls-37d with:</p>
 <pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> </span><span class="hl-0">xls</span><span class="hl-1">-37</span><span class="hl-0">d</span>
 </code></pre>
-<p>or with yarn</p>
+<p>or with yarn:</p>
 <pre><code><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-0">add</span><span class="hl-1"> </span><span class="hl-0">xls</span><span class="hl-1">-37</span><span class="hl-0">d</span>
 </code></pre>
-<p>Reference documentation available here: <a href="https://standardconnect.github.io/xls-37d/">https://standardconnect.github.io/xls-37d/</a></p>
+<p>Reference documentation available <a href="https://standardconnect.github.io/xls-37d/">here</a>. Please note, this is still a work-in-progress.</p>
 
 <a href="#encoding" id="encoding" style="color: inherit; text-decoration: none;">
   <h4>Encoding</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1"> </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;xls-37d&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">ctim</span><span class="hl-1">, </span><span class="hl-5">bigInt</span><span class="hl-1">, </span><span class="hl-5">hex</span><span class="hl-1">, </span><span class="hl-5">bin</span><span class="hl-1">, </span><span class="hl-5">bytes</span><span class="hl-1"> } = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1">.</span><span class="hl-6">encode</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-0">networkId</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">ledgerIndex</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">txnIndex</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
+<p>An example encoding routine in typescript follows:</p>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1"> </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;xls-37d&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">ctid</span><span class="hl-1"> } = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1">.</span><span class="hl-6">encode</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-0">networkId</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">lgrIndex</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">txnIndex</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
 </code></pre>
 
 <a href="#decoding" id="decoding" style="color: inherit; text-decoration: none;">
   <h4>Decoding</h4>
 </a>
-<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1"> </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;xls-37d&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">networkId</span><span class="hl-1">, </span><span class="hl-5">ledgerIndex</span><span class="hl-1">, </span><span class="hl-5">txnIndex</span><span class="hl-1"> } = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1">.</span><span class="hl-6">decode</span><span class="hl-1">(</span><span class="hl-0">ctim</span><span class="hl-1">);</span>
+<p>An example decoding routine in typescript follows:</p>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1"> </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;xls-37d&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> { </span><span class="hl-5">networkId</span><span class="hl-1">, </span><span class="hl-5">lgrIndex</span><span class="hl-1">, </span><span class="hl-5">txnIndex</span><span class="hl-1"> } = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-0">xls37d</span><span class="hl-1">.</span><span class="hl-6">decode</span><span class="hl-1">(</span><span class="hl-0">ctid</span><span class="hl-1">);</span>
 </code></pre>
+
+<a href="#background" id="background" style="color: inherit; text-decoration: none;">
+  <h1>Background</h1>
+</a>
+
+<a href="#hashing" id="hashing" style="color: inherit; text-decoration: none;">
+  <h2>Hashing</h2>
+</a>
+<p>The XRP Ledger historically identifies ledgers and transactions (and other objects) using a namespace-biased &#39;SHA-512Half&#39; hashing function, which results in a 64 hex nibble unique identifier.1(<a href="https://xrpl.org/basic-data-types.html#hashes">https://xrpl.org/basic-data-types.html#hashes</a>)</p>
+<p>Since these hashes are derived from the contents of the data, each identifier is completely independent of consensus.</p>
+<p>Example Transaction Hash (ID):</p>
+<blockquote>
+<p>C4E284010276F8457C4BF96D0C534B7383087680C159F9B8C18D5EE876F7EFE7</p>
+</blockquote>
+
+<a href="#indexing" id="indexing" style="color: inherit; text-decoration: none;">
+  <h2>Indexing</h2>
+</a>
+<p>Ledgers and transactions can be identified by their sequenced position.</p>
+<p>As new ledgers are validated on XRP Ledger Protocol Chains, they are assigned a sequence number, which is always the previous ledger sequence plus one. The first ledger sequence is the genesis ledger with a value of one.</p>
+<p>Ledgers can therefore be uniquely identified by a <code>ledger_index</code> (sequence) 2(<a href="https://xrpl.org/basic-data-types.html#ledger-index">https://xrpl.org/basic-data-types.html#ledger-index</a>) 3(<a href="https://xrpl.org/ledger-header.html">https://xrpl.org/ledger-header.html</a>). The only limitation is that the ledger needs to be closed before a sequence number can be used for identification.</p>
+
+<a href="#motivation" id="motivation" style="color: inherit; text-decoration: none;">
+  <h2>Motivation</h2>
+</a>
+<p>The XRP Ledger is poised to become (or depending on the time of reading: has already become) an ecosystem of cooperatively interconnected XRPL Protocol Chains. It is imperative that users of these chains can efficiently locate a specific transaction on a specific chain. Therefore a network-aware transaction identifier is necessary.</p>
 
 <a href="#references" id="references" style="color: inherit; text-decoration: none;">
   <h1>References</h1>
 </a>
+<p>[1] <a href="https://xrpl.org/basic-data-types.html#hashes">https://xrpl.org/basic-data-types.html#hashes</a></p>
+<p>[2] <a href="https://xrpl.org/basic-data-types.html#ledger-index">https://xrpl.org/basic-data-types.html#ledger-index</a></p>
+<p>[3] <a href="https://xrpl.org/ledger-header.html">https://xrpl.org/ledger-header.html</a></p>
+<p>[4] <a href="https://xrpl.org/consensus.html">https://xrpl.org/consensus.html</a></p>
+<p>[5] <a href="https://xrpl.org/transaction-metadata.html">https://xrpl.org/transaction-metadata.html</a></p>
 
 <a href="#0015-xls-15d---concise-transaction-identifier" id="0015-xls-15d---concise-transaction-identifier" style="color: inherit; text-decoration: none;">
   <h4>0015 XLS-15d - Concise Transaction Identifier</h4>
@@ -98,16 +95,6 @@
   <h4>0032 XLS-32d - Request URI Structure</h4>
 </a>
 <p><a href="https://github.com/XRPLF/XRPL-Standards/discussions/81">https://github.com/XRPLF/XRPL-Standards/discussions/81</a></p>
-
-<a href="#changelog" id="changelog" style="color: inherit; text-decoration: none;">
-  <h1>Changelog</h1>
-</a>
-<blockquote>
-<p>2023-02-10</p>
-</blockquote>
-<ul>
-<li>Published draft for open discussion</li>
-</ul>
 </div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
